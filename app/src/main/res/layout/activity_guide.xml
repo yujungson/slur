@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".guide">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Guide">
+
+        <ImageView
+            android:id="@+id/logo2"
+            android:layout_width="269dp"
+            android:layout_height="95dp"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:srcCompat="@drawable/slur_logo"
+            tools:layout_editor_absoluteY="153dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="52dp"
+            android:text="Slur 4step 이용가이드"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine2"
+            app:layout_constraintEnd_toEndOf="@+id/editTextTextMultiLine2"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLine2" />
+
+        <EditText
+            android:id="@+id/editTextTextMultiLine2"
+            android:layout_width="330dp"
+            android:layout_height="122dp"
+            android:layout_marginBottom="100dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:text="1. 프로필을 작성해주세요! 2. 연주희망글/연주자모집글을 작성해주세요! 3. 원하는 무대/연주자에게 연락해보세요! 4. 맞춤추천무대/연주자도 확인해보세요!"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
+            tools:layout_editor_absoluteX="40dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#ff9a76"
+            android:onClick="loginBtnClick"
+            android:text="확인"
+            tools:layout_editor_absoluteX="161dp"
+            tools:layout_editor_absoluteY="582dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
