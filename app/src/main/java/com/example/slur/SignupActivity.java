@@ -44,48 +44,52 @@ public class SignupActivity extends AppCompatActivity {
                 {
                     return;
                 }
-                if(email.equals("")){
-                    AlertDialog.Builder builder=new AlertDialog.Builder( SignupActivity.this );
+                else if(email.equals("")){
+                    Log.d("냠", "빈칸확인");
+                    AlertDialog.Builder builder=new AlertDialog.Builder( SignupActivity.this);
                     dialog=builder.setMessage("아이디는 빈 칸일 수 없습니다")
                             .setPositiveButton("확인",null)
                             .create();
                     dialog.show();
                     return;
-                }
-                Response.Listener<String> responseListener=new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse=new JSONObject(response);
-                            System.out.println(jsonResponse);
-                            boolean success=jsonResponse.getBoolean("success");
-                            if(success){
-                                AlertDialog.Builder builder=new AlertDialog.Builder( SignupActivity.this, R.style.AlertDialogTheme );
-                                dialog=builder.setMessage("사용할 수 있는 이메일입니다.")
-                                        .setPositiveButton("확인",null)
-                                        .create();
-                                dialog.show();
-                                et_id.setEnabled(false);
-                                validate=true;
-                                btn_validate.setText("확인");
+                }else{
+                    Response.Listener<String> responseListener=new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                Log.d("냠", "통신");
+                                JSONObject jsonResponse=new JSONObject(response);
+                                boolean success=jsonResponse.getBoolean("success");
+                                if(success){
+                                    Log.d("냠", "return success");
+                                    AlertDialog.Builder builder=new AlertDialog.Builder( SignupActivity.this);
+                                    dialog=builder.setMessage("사용할 수 있는 이메일입니다.")
+                                            .setPositiveButton("확인",null)
+                                            .create();
+                                    dialog.show();
+                                    et_id.setEnabled(false);
+                                    validate=true;
+                                    btn_validate.setText("확인");
+                                }
+                                else{
+                                    AlertDialog.Builder builder=new AlertDialog.Builder( SignupActivity.this);
+                                    dialog=builder.setMessage("사용할 수 없는 아이디입니다.")
+                                            .setNegativeButton("확인",null)
+                                            .create();
+                                    dialog.show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            else{
-                                AlertDialog.Builder builder=new AlertDialog.Builder( SignupActivity.this, R.style.AlertDialogTheme );
-                                dialog=builder.setMessage("사용할 수 없는 아이디입니다.")
-                                        .setNegativeButton("확인",null)
-                                        .create();
-                                dialog.show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                };
-                ValidateRequest validateRequest=new ValidateRequest(email,responseListener);
-                RequestQueue queue= Volley.newRequestQueue(SignupActivity.this);
-                queue.add(validateRequest);
+                    };
+                    ValidateRequest validateRequest=new ValidateRequest(email,responseListener);
+                    RequestQueue queue= Volley.newRequestQueue(SignupActivity.this);
+                    queue.add(validateRequest);
 
+                }
             }
+
         });
 
         //회원가입 버튼 클릭 시 수행
@@ -94,7 +98,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String email = et_id.getText().toString();
-                String pwd = et_id.getText().toString();
+                String pwd = et_pass.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -102,23 +106,26 @@ public class SignupActivity extends AppCompatActivity {
 
                         try {
                             JSONObject jsonObject = new JSONObject( response );
+                            Log.d("냠", "1");
                             boolean success = jsonObject.getBoolean( "success" );
-
+                            Log.d("냠", "2");
                             //회원가입 성공시
                             if(success) {
+                                Log.d("냠", "if문들어옴");
                                 Toast.makeText( getApplicationContext(), "Slur의 회원이 되신 걸 환영합니다", Toast.LENGTH_SHORT ).show();
-                                Intent intent = new Intent( getApplicationContext(), LoginActivity.class );
+                                Intent intent = new Intent( getApplicationContext(), guide.class );
                                 startActivity( intent );
 
                                 //회원가입 실패시
                             } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this, R.style.AlertDialogTheme);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
                                 builder.setMessage("회원가입에 실패했습니다");
                                 builder.setPositiveButton("확인", null);
                                 builder.create().show();
                             }
 
                         } catch (JSONException e) {
+                            Log.d("냠", "예외");
                             e.printStackTrace();
                         }
 
@@ -129,6 +136,7 @@ public class SignupActivity extends AppCompatActivity {
                 SignupRequest signupRequest = new SignupRequest( email, pwd, responseListener);
                 RequestQueue queue = Volley.newRequestQueue( SignupActivity.this );
                 queue.add( signupRequest );
+                Log.d("냠", "db에 추가됨");
             }
         });
     }

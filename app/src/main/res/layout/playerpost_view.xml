@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <RelativeLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:textColor="#000000"
+            android:text="제목은열글자까지가능"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="25dp"
+            android:layout_gravity="center"
+            android:layout_toLeftOf="@id/state"
+            android:background="@color/colorPrimaryDark"/>
+        <TextView
+            android:id="@+id/state"
+            android:layout_width="70dp"
+            android:layout_height="17dp"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:layout_gravity="center"
+            android:text="현재상태"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/line1"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/writer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="7dp"
+            android:text="작성자"/>
+        <TextView
+            android:id="@+id/writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@id/writer_text"
+            android:text="닉네임"/>
+
+        <TextView
+            android:id="@+id/place_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="7dp"
+            android:layout_toLeftOf="@id/place"
+            android:text="선호장소" />
+
+        <TextView
+            android:id="@+id/place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="null" />
+    </RelativeLayout>
+
+</RelativeLayout>

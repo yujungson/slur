@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="instrument">
+        <item>전체</item>
+        <item>피아노</item>
+        <item>기타</item>
+        <item>플룻</item>
+        <item>바이올린</item>
+        <item>비올라</item>
+        <item>첼로</item>
+        <item>더블베이스</item>
+    </string-array>
+    <string-array name="state">
+        <item>섭외중</item>
+        <item>연주완료</item>
+        <item>연주취소</item>
+    </string-array>
+    <string-array name="statePlayer">
+        <item>연주가능</item>
+        <item>연주중단</item>
+    </string-array>
+
+    <string-array name="place">
+        <item>전체</item>
+        <item>서울경기</item>
+        <item>강원</item>
+        <item>충청</item>
+        <item>전라</item>
+        <item>경상</item>
+        <item>제주</item>
+        <item>기타</item>
+    </string-array>
+</resources>

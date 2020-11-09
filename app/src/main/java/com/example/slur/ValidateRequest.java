@@ -13,11 +13,11 @@ public class ValidateRequest extends StringRequest {
     final static  private String URL="http://slur.pe.kr/UserValidate.php";
     private Map<String,String> map;
 
-    public ValidateRequest(String userID, Response.Listener<String>listener){
-        super(Request.Method.POST,URL,listener,null);
+    public ValidateRequest(String email, Response.Listener<String>listener){
+        super(Request.Method.POST, URL,listener,null);
 
         map=new HashMap<>();
-        map.put("userID",userID);
+        map.put("email",email);
     }
 
     @Override

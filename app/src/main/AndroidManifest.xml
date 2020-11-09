@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.slur">
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,14 +17,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/AppTheme">
+        <activity android:name=".post.playerPostItemView"></activity>
+        <activity android:name=".post.playerPostWriteActivity" />
+        <activity android:name=".post.playerPostListActivity" />
+        <activity android:name=".post.ownerPostItemView" />
+        <activity android:name=".post.ownerPostWriteActivity" />
+        <activity android:name=".post.ownerPostListActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".guide" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".postTypeSelect" />
-        <activity android:name=".profile" />
         <activity android:name=".home" />
+        <activity android:name=".postTypeSelect" />
+        <activity android:name=".profile.profile" />
+        <activity android:name=".profile.ProfileEditActivity" />
+        <activity android:name=".profile.OthersProfileActivity" />
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profile.profile">
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="프로필"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/user_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07">
+
+        <RelativeLayout
+            android:id="@+id/profile_img_container"
+            android:layout_width="65dp"
+            android:layout_height="55dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/profile_img"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_centerVertical="true"
+                android:duplicateParentState="true"
+                android:src="@drawable/profile" />
+
+            <ImageView
+                android:id="@+id/add_img"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:duplicateParentState="true"
+                android:src="@android:drawable/ic_input_add" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/profile_img_container">
+
+            <EditText
+                android:id="@+id/nick_name"
+                style="@style/ProfileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="닉네임을 입력해주세요." />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nick_name"
+                android:layout_marginTop="5dp"
+                android:text="29dongss@gmail.com"
+                android:textSize="17sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:id="@+id/info_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_info_container">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/container_university"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/tv_university_title"
+                    style="@style/ProfileTitleText"
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
+                    android:text="학교/소속"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/tv_university"
+                    style="@style/ProfileEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_university_title"
+                    android:hint="학교 및 소속을 입력해 주세요" />
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/container_major"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/container_university"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/tv_major_title"
+                    style="@style/ProfileTitleText"
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
+                    android:text="전공"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Spinner
+                    android:id="@+id/spinner_major"
+                    style="@style/ProfileEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+
+                    android:layout_toRightOf="@+id/tv_major_title"
+                    app:layout_constraintStart_toEndOf="@+id/tv_major_title"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <EditText
+                    android:id="@+id/tv_major_2"
+                    style="@style/ProfileEditText"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_toRightOf="@+id/spinner_major"
+                    android:hint="세부전공입력"
+                    app:layout_constraintStart_toEndOf="@+id/spinner_major"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:id="@+id/container_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/container_major"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/tv_contact_title"
+                    style="@style/ProfileTitleText"
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
+                    android:text="연락처"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/tv_contact"
+                    style="@style/ProfileEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_contact_title"
+                    android:hint="연락처를 입력해 주세요" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/container_introduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/container_contact"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:id="@+id/tv_introduction_title"
+                    style="@style/ProfileTitleText"
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
+                    android:text="자기소개"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/tv_introduction"
+                    style="@style/ProfileEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_introduction_title"
+                    android:hint="자기소개를 입력해주세요. (256자까지 입력 가능합니다.)"
+                    android:maxLength="256" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/container_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/container_introduction"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/container_video_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_video_title"
+                        style="@style/ProfileTitleText"
+                        android:layout_width="90dp"
+                        android:layout_height="35dp"
+                        android:text="영상" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/container_video_clip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/container_video_title">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="vertical" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="영상 3개\n업로드 가능"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/btn_modify_confirm"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/container_video"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/round_border"
+                android:backgroundTint="@color/colorPrimary2"
+                android:text="수정하기"
+                android:textColor="#474747"
+                android:textSize="18sp"
+
+                />
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

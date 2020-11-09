@@ -5,4 +5,12 @@
     <color name="colorPrimary3">#f7c5a8</color>
     <color name="colorPrimaryDark">#433835</color>
     <color name="colorAccent">#679b9b</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray1">#B2B0B0</color>
+    <color name="gray2">#F3F1F1</color>
+
+    <color name="active">#3CC56B</color>
+    <color name="ongoing">#1E8BEB</color>
+    <color name="pause">#CD3A32</color>
 </resources>
