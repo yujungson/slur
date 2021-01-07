@@ -54,14 +54,14 @@ public class ownerPostWriteActivity extends AppCompatActivity implements View.On
         user_id = new PreferenceHelper(getApplicationContext()).getUserId(); // EDITED
         Log.d("user_id", user_id+"");
 
-
-
         btn_cancel = findViewById( R.id.btn_cancel );//취소버튼
         btn_cancel.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent( getApplicationContext(), ownerPostListActivity.class );
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity( intent );
+                finish();
             }
         });
 
@@ -148,7 +148,9 @@ public class ownerPostWriteActivity extends AppCompatActivity implements View.On
                                 Log.d("냠냠", "if문들어옴");
                                 Toast.makeText(getApplicationContext(), "구인 게시판에 글이 작성되었습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), ownerPostListActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
+                                finish();
 
                                 //실패시
                             } else {

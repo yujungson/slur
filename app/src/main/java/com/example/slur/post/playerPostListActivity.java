@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -21,7 +22,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.slur.LoginActivity;
 import com.example.slur.PreferenceHelper;
 import com.example.slur.R;
-import com.example.slur.SignupActivity;
 import com.example.slur.home;
 import com.example.slur.postTypeSelect;
 
@@ -56,7 +56,7 @@ public class playerPostListActivity extends AppCompatActivity {
     //menu
     ImageView menu_home, menu_post, menu_rating, menu_chat, menu_profile;
 
-    private Button btn_write;
+    private LinearLayout btn_write;
     int user_id;
 
     @Override
@@ -101,6 +101,7 @@ public class playerPostListActivity extends AppCompatActivity {
 
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray result = jsonObject.getJSONArray("result");
+                    Log.d("냠", result.toString());
                     for (int i = 0; i<result.length(); i++){
                         Log.d("냠", Integer.toString(i) + "번째 게시글");
                         JSONObject c = result.getJSONObject(i);
@@ -110,6 +111,11 @@ public class playerPostListActivity extends AppCompatActivity {
                         String name = c.getString("writer");
                         Log.d("냠", name);
                         int state = c.getInt("state");
+                        int writer_id = c.getInt("writer_id");
+                        String content = c.getString("content");
+                        String post_date = c.getString("post_date");
+                        String pay = c.getString("pay");
+                        Log.d("냠", "writer_id : "+ writer_id);
 
                         String place = c.getString("place");
                         String[] preferredPlace = place.split(" ");
@@ -136,7 +142,7 @@ public class playerPostListActivity extends AppCompatActivity {
                             }
                         }
 
-                        PlayerPostItemModel itemModel = new PlayerPostItemModel(post_id, name, title, state, preferredPlace, position);
+                        PlayerPostItemModel itemModel = new PlayerPostItemModel(post_id, name, title, state, preferredPlace, position, writer_id, content, post_date, pay);
                         if(itemModel.getState() == 0){
                             PlayerPostitemModelsActive.add(0, itemModel);
                         }
@@ -214,6 +220,7 @@ public class playerPostListActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.d("냠", "예외");
                 }
             }
         };
@@ -227,17 +234,17 @@ public class playerPostListActivity extends AppCompatActivity {
 
 
         //menu
-        menu_home = (ImageView)findViewById(R.id.menu_home);
-        menu_post = (ImageView)findViewById(R.id.menu_post);
-        menu_rating = (ImageView)findViewById(R.id.menu_rating);
-        menu_chat = (ImageView)findViewById(R.id.menu_chat);
-        menu_profile = (ImageView)findViewById(R.id.menu_profile);
+        menu_home = (ImageView) findViewById(R.id.menu_home);
+        menu_post = (ImageView) findViewById(R.id.menu_post);
+        menu_rating = (ImageView) findViewById(R.id.menu_rating);
+        menu_chat = (ImageView) findViewById(R.id.menu_chat);
+        menu_profile = (ImageView) findViewById(R.id.menu_profile);
 
         menu_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(playerPostListActivity.this, home.class);
-                intent.putExtra("user_id", user_id);
+                Intent intent = new Intent(getApplicationContext(), com.example.slur.home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -245,8 +252,8 @@ public class playerPostListActivity extends AppCompatActivity {
         menu_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(playerPostListActivity.this, postTypeSelect.class);
-                intent.putExtra("user_id", user_id);
+                Intent intent = new Intent(getApplicationContext(), com.example.slur.postTypeSelect.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -254,13 +261,41 @@ public class playerPostListActivity extends AppCompatActivity {
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user_id > 0){
-                    Intent intent = new Intent(playerPostListActivity.this, com.example.slur.profile.profile.class);
-                    intent.putExtra("user_id", user_id);
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.profile.profile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(playerPostListActivity.this, LoginActivity.class);
-                    intent.putExtra("user_id", user_id);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+        menu_rating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.rating.RatingHome.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+        menu_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.chat.chatList.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                 }
             }

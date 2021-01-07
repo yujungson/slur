@@ -53,7 +53,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Intent intent = new Intent( LoginActivity.this, SignupActivity.class );
                 Intent intent = new Intent( LoginActivity.this, SignupActivity.class );
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity( intent );
+                finish();
             }
         });
 
@@ -90,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Toast.makeText( getApplicationContext(), String.format(name+"님 환영합니다!"), Toast.LENGTH_SHORT ).show();
                                 Intent intent = new Intent( LoginActivity.this, home.class );
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 //                                intent.putExtra( "email", email );
 //                                intent.putExtra( "pwd", pwd );
@@ -98,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                intent.putExtra( "name", name );
 
                                 startActivity( intent );
+                                finish();
 
                             } else {//로그인 실패시
                                 Toast.makeText( getApplicationContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT ).show();

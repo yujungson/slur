@@ -24,7 +24,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.slur.LoginActivity;
 import com.example.slur.PreferenceHelper;
 import com.example.slur.R;
+import com.example.slur.home;
 import com.example.slur.post.ProfileRequest;
+import com.example.slur.postTypeSelect;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,29 +39,99 @@ import static com.example.slur.R.id.tv_thumbnail_title;
 
 public class profile extends AppCompatActivity {
 
-    // EDITED
     ImageView profileImg;
     TextView nicknameTv, emailTv, universityTv, majorTv, major2Tv, contactTv, introductionTv;
     RecyclerView ClipView;
     ClipAdapter clAdapter;
     Button ModifyBtn;
-    Button PostlistBtn;
+    Button PostlistBtn, heartBtn;
+    int user_id;
 
-    private static final int REQUEST_EDIT = 100; // EDITED
+    ImageView menu_home, menu_post, menu_rating, menu_chat, menu_profile;
 
-    private PreferenceHelper preferenceHelper; // EDITED
+    private static final int REQUEST_EDIT = 100;
+
+    private PreferenceHelper preferenceHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        preferenceHelper = new PreferenceHelper(getApplicationContext()); // EDITED
+        preferenceHelper = new PreferenceHelper(getApplicationContext());
+        user_id = preferenceHelper.getUserId();
 
         initViews();
+        //menu
+        menu_home = (ImageView) findViewById(R.id.menu_home);
+        menu_post = (ImageView) findViewById(R.id.menu_post);
+        menu_rating = (ImageView) findViewById(R.id.menu_rating);
+        menu_chat = (ImageView) findViewById(R.id.menu_chat);
+        menu_profile = (ImageView) findViewById(R.id.menu_profile);
+
+        menu_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), com.example.slur.home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        menu_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), com.example.slur.postTypeSelect.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        menu_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.profile.profile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+        menu_rating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.rating.RatingHome.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+        menu_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.chat.chatList.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
-    // EDITED
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -69,7 +141,6 @@ public class profile extends AppCompatActivity {
     }
 
     private void initViews() {
-        // EDITED
         profileImg = (ImageView) findViewById(R.id.profile_img);
         nicknameTv = (TextView) findViewById(R.id.nick_name);
         emailTv = (TextView) findViewById(R.id.email);
@@ -87,7 +158,7 @@ public class profile extends AppCompatActivity {
 
 
         ModifyBtn = findViewById(R.id.btn_modify_info);
-        PostlistBtn = findViewById(R.id.btn_show_comment);
+
         //프로필 수정화면으로 이동
         ModifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,26 +166,35 @@ public class profile extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), ProfileEditActivity.class));
             }
         });
-        //타인 프로필 화면으로 이동시켜 놨는데, 추후 작성글 리스트 액티비티 구현 후 이동필요
+
+       //작성글보기
+        PostlistBtn = findViewById(R.id.btn_show_comment);
         PostlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // EDITED
-                Intent intent = new Intent(getApplicationContext(), OthersProfileActivity.class);
-                double dValue = Math.random();
-                int iValue = (int) (dValue * 5) + 1;
-                intent.putExtra("user_id", iValue);
-                startActivityForResult(intent, REQUEST_EDIT); // EDITED : forResult
+                Intent intent = new Intent(getApplicationContext(), MyPostTypeSelect.class);
+                startActivity(intent);
             }
         });
 
-        // EDITED
+
+        //찜한글보기
+        heartBtn = findViewById(R.id.btn_show_wish);
+        heartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HeartPostTypeSelect.class);
+                startActivity(intent);
+            }
+        });
+
+
         loadData();
     }
 
     private ArrayList<VideoClip> makeDefaultClip() {
         ArrayList<VideoClip> list = new ArrayList<>();
-        list.add(new VideoClip(null, null, "첫쨰설명"));
+        list.add(new VideoClip(null, null, "첫째설명"));
         list.add(new VideoClip(null, null, "둘째설명"));
         list.add(new VideoClip(null, null, "셋째설명"));
         return list;
@@ -162,7 +242,7 @@ public class profile extends AppCompatActivity {
         }
     }
 
-    // EDITED
+
     Response.Listener<String> profileResponseListener = new Response.Listener<String>() {
 
         @Override
@@ -208,7 +288,7 @@ public class profile extends AppCompatActivity {
         }
     };
 
-    // EDITED
+
     private void loadData() {
         ProfileRequest profileRequest = new ProfileRequest(preferenceHelper.getUserId(), profileResponseListener);
         RequestQueue queue = Volley.newRequestQueue(this);

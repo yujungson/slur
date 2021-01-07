@@ -61,7 +61,7 @@
                     android:max="100"
                     android:progress="30" />
 
-                <!--  //kjy 이미지가 없어서 안드 임의의 이미지 사용하였음              -->
+
                 <ImageView
                     android:id="@+id/ic_sound"
                     android:layout_width="40dp"

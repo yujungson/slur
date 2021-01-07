@@ -25,16 +25,6 @@
             android:text="연주 희망 게시판"
             android:textSize="20dp"/>
 
-        <Button
-            android:id="@+id/btn_write"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/rect_round_5dp"
-            android:text="글쓰기">
-        </Button>
-
     </RelativeLayout>
 
     <View
@@ -144,6 +134,34 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
     </ListView>
+
+    <LinearLayout
+        android:id="@+id/btn_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/menu"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/write_btn"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="5dp"
+            android:text="글쓰기"
+            android:textSize="16dp"/>
+        <ImageView
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/pencil"/>
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/menu"
         android:layout_width="match_parent"

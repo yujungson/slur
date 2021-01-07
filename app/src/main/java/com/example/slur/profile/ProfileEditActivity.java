@@ -36,7 +36,6 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.slur.PreferenceHelper;
 import com.example.slur.R;
-import com.example.slur.post.EditProfileRequest;
 import com.example.slur.post.ProfileRequest;
 
 import org.json.JSONException;
@@ -53,7 +52,6 @@ import static com.example.slur.R.id.tv_thumbnail_title;
 
 
 public class ProfileEditActivity extends AppCompatActivity {
-    // EDITED
     ImageView profileImg, addImg;
     TextView emailTv;
     EditText nicknameEt, universityEt, contactEt, introductionEt, majorEt;
@@ -68,33 +66,31 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     Bitmap profileImgBitmap;
 
-    private PreferenceHelper preferenceHelper; // EDITED
+    private PreferenceHelper preferenceHelper;
 
-    private static final int RESULT_LOAD_IMG = 100; // EDITED
+    private static final int RESULT_LOAD_IMG = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
-        preferenceHelper = new PreferenceHelper(getApplicationContext()); // EDITED
+        preferenceHelper = new PreferenceHelper(getApplicationContext());
 
         initViews();
 
-        // EDITED
         ProfileRequest ownerProfileRequest = new ProfileRequest(preferenceHelper.getUserId(), ownerProfileResponseListener);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(ownerProfileRequest);
     }
 
-    // EDITED
+
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             try {
                 final Uri imageUri = data.getData();
-//                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 profileImgBitmap = getCorrectlyOrientedImage(this, imageUri);
                 profileImg.setImageBitmap(profileImgBitmap);
                 addImg.setVisibility(View.GONE);
@@ -107,7 +103,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         }
     }
 
-    // EDITED
+
     public static int getOrientation(Context context, Uri photoUri) {
         Cursor cursor = context.getContentResolver().query(photoUri, new String[] { MediaStore.Images.ImageColumns.ORIENTATION }, null, null, null);
 
@@ -119,7 +115,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         return cursor.getInt(0);
     }
 
-    // EDITED
+
     public static Bitmap getCorrectlyOrientedImage(Context context, Uri photoUri) throws IOException {
         InputStream is = context.getContentResolver().openInputStream(photoUri);
         BitmapFactory.Options dbo = new BitmapFactory.Options();
@@ -217,7 +213,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         ConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // EDITED : get edited information
                 final String name = nicknameEt.getText().toString();
                 final String university = universityEt.getText().toString();
                 final int isMajorIndex = majorSpinner.getSelectedItemPosition();

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".postTypeSelect">
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="10dp"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:src="@drawable/slur_logo"
+            android:scaleType="fitStart"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="리뷰"
+            android:textSize="20dp"/>
+    </RelativeLayout>
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/title"
+        android:background="@color/colorPrimary2"/>
+
+
+    <RelativeLayout
+        android:id="@+id/profile_card"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/line"
+        android:gravity="start"
+        android:padding="10dp">
+
+
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="20dp"
+            android:text="리뷰 남기기"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp" />
+        >
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:layout_marginLeft="20dp"
+
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="함께한 음악인들에게 리뷰를 남겨보세요"
+            android:textColor="@color/colorAccent"
+            android:textSize="14dp" />
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/profile_card"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorPrimary2"/>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/profile_card"
+        android:layout_above="@id/menu"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        >
+
+
+        <RelativeLayout
+            android:id="@+id/rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/rate_title"
+                android:textSize="16dp"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:text="별점"
+                android:gravity="center"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="1"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_toRightOf="@+id/rate_title"
+                 />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rate"
+            android:layout_marginTop="30dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/review_title"
+                android:layout_width="90dp"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="한줄평"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/tv_introduction"
+                style="@style/ProfileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_toRightOf="@+id/review_title"
+                android:hint="한줄평을 100자 이내로 입력해주세요:)"
+                android:maxLength="100" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/review"
+            android:gravity="center"
+            android:layout_marginTop="30dp">
+
+            <Button
+                android:id="@+id/btn_save"
+
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+
+                android:background="@drawable/rect_round_5dp"
+
+                android:text="저장"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="14dp">
+
+            </Button>
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp">
+        <ImageView
+            android:id="@+id/menu_home"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/home"/>
+        <ImageView
+            android:id="@+id/menu_post"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/post"/>
+        <ImageView
+            android:id="@+id/menu_rating"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/favourite"/>
+        <ImageView
+            android:id="@+id/menu_chat"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/chat"/>
+        <ImageView
+            android:id="@+id/menu_profile"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/profile"/>
+    </LinearLayout>
+
+</RelativeLayout>

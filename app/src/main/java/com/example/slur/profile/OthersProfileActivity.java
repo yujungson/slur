@@ -35,31 +35,29 @@ import static com.example.slur.R.id.tv_thumbnail_title;
 // 다른 프로필 화면
 public class OthersProfileActivity extends AppCompatActivity {
 
-    // EDITED
     ImageView profileImg;
     TextView nicknameTv, emailTv, universityTv, majorTv, major2Tv, contactTv, introductionTv;
     Button showPostBtn;
     RecyclerView ClipView;
     ClipAdapter CLipAdapter;
 
-    int userId;
+    int userId, view_userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_others_profile);
 
-//        userId = getIntent().getIntExtra("user_id", 0);
-        userId = new PreferenceHelper(getApplicationContext()).getUserId(); // EDITED
+        view_userID = getIntent().getIntExtra("user_id", 0);
+       // userId = new PreferenceHelper(getApplicationContext()).getUserId();
 
         initViews();
 
-        loadData(); // EDITED
+        loadData();
     }
 
     // View 초기화
     private void initViews() {
-        // EDITED
         profileImg = (ImageView) findViewById(R.id.profile_img);
         nicknameTv = (TextView) findViewById(R.id.nick_name);
         emailTv = (TextView) findViewById(R.id.email);
@@ -145,7 +143,7 @@ public class OthersProfileActivity extends AppCompatActivity {
         }
     }
 
-    // EDITED
+
     Response.Listener<String> profileResponseListener = new Response.Listener<String>() {
 
         @Override
@@ -189,10 +187,10 @@ public class OthersProfileActivity extends AppCompatActivity {
         }
     };
 
-    // EDITED
+
     private void loadData() {
-        if (userId > 0) {
-            ProfileRequest profileRequest = new ProfileRequest(userId, profileResponseListener);
+        if (view_userID > 0) {
+            ProfileRequest profileRequest = new ProfileRequest(view_userID, profileResponseListener);
             RequestQueue queue = Volley.newRequestQueue(this);
             queue.add(profileRequest);
         } else {

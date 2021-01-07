@@ -54,17 +54,17 @@ public class postTypeSelect extends AppCompatActivity {
         });
 
         //menu
-        menu_home = (ImageView)findViewById(R.id.menu_home);
-        menu_post = (ImageView)findViewById(R.id.menu_post);
-        menu_rating = (ImageView)findViewById(R.id.menu_rating);
-        menu_chat = (ImageView)findViewById(R.id.menu_chat);
-        menu_profile = (ImageView)findViewById(R.id.menu_profile);
+        menu_home = (ImageView) findViewById(R.id.menu_home);
+        menu_post = (ImageView) findViewById(R.id.menu_post);
+        menu_rating = (ImageView) findViewById(R.id.menu_rating);
+        menu_chat = (ImageView) findViewById(R.id.menu_chat);
+        menu_profile = (ImageView) findViewById(R.id.menu_profile);
 
         menu_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(postTypeSelect.this, home.class);
-                intent.putExtra("user_id", user_id);
+                Intent intent = new Intent(getApplicationContext(), home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -72,8 +72,8 @@ public class postTypeSelect extends AppCompatActivity {
         menu_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(postTypeSelect.this, postTypeSelect.class);
-                intent.putExtra("user_id", user_id);
+                Intent intent = new Intent(getApplicationContext(), postTypeSelect.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -81,13 +81,41 @@ public class postTypeSelect extends AppCompatActivity {
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user_id > 0){
-                    Intent intent = new Intent(postTypeSelect.this, com.example.slur.profile.profile.class);
-                    intent.putExtra("user_id", user_id);
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.profile.profile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(postTypeSelect.this, LoginActivity.class);
-                    intent.putExtra("user_id", user_id);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+        menu_rating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.rating.RatingHome.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+        menu_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.chat.chatList.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                 }
             }

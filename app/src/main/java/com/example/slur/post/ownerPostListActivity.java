@@ -12,8 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -37,14 +39,13 @@ import java.util.List;
 public class ownerPostListActivity extends AppCompatActivity {
 
     public int user_id = 0;
-    private Button btn_write;
+    private LinearLayout btn_write;
 
     //ListView관련
     ListView PostList;
     List<PostItemModel> PostitemModels = new ArrayList<>();
     List<PostItemModel> PostitemModelsActive = new ArrayList<>();
     PostAdapter postAdapter;
-    List<PostItemModel> tempModels = new ArrayList<>();
 
     //Spinner관련
     Spinner instrumentSpinner, placeSpinner;
@@ -67,9 +68,6 @@ public class ownerPostListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_post_list_activity);
 
         Intent intent = getIntent();
-//        if(intent.getExtras() != null){
-//            user_id = (int)intent.getIntExtra("user_id",0);
-//        }
         user_id = new PreferenceHelper(getApplicationContext()).getUserId(); // EDITED
         Log.d("user_id", user_id+"");
 
@@ -101,91 +99,82 @@ public class ownerPostListActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("냠", "통신");
-
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray result = jsonObject.getJSONArray("result");
-                    for (int i = 0; i<result.length(); i++){
-                        Log.d("냠", Integer.toString(i) + "번째 게시글");
-                        JSONObject c = result.getJSONObject(i);
-                        int post_id = c.getInt("post_id");
-                        Log.d("냠", Integer.toString(post_id));
-                        String title = c.getString("title");
-                        String name = c.getString("writer");
-                        int write_user_id = c.getInt("user_id");
-                        Log.d("냠", name);
-                        String place = c.getString("place");
-                        String play_date = c.getString("play_date");
-                        String pay = c.getString("pay");
-                        String content = c.getString("content");
-                        String post_date = c.getString("post_date");
+                        for (int i = 0; i<result.length(); i++){
+                            JSONObject c = result.getJSONObject(i);
+                            int post_id = c.getInt("post_id");
+                            String title = c.getString("title");
+                            String name = c.getString("writer");
+                            int write_user_id = c.getInt("user_id");
+                            String place = c.getString("place");
+                            String play_date = c.getString("play_date");
+                            String pay = c.getString("pay");
+                            String content = c.getString("content");
+                            String post_date = c.getString("post_date");
 
-                        int state = c.getInt("state");
+                            int state = c.getInt("state");
 
-                        String need_position = c.getString("need_position");
-                        String[] position = need_position.split(" ");
-                        Log.d("냠", "포지션 개수 : " + position.length);
-                        String need_position_state = c.getString("position_state");
-                        String[] position_state = need_position_state.split(" ");
+                            String need_position = c.getString("need_position");
+                            String[] position = need_position.split(" ");
+                            String need_position_state = c.getString("position_state");
+                            String[] position_state = need_position_state.split(" ");
 
-                        for(int j = 0 ; j < position.length ; j++){
-                            Log.d("냠", Integer.toString(i) + "번째 게시글의 " + Integer.toString(j) + "번째 포지션");
-                            int flag = 0;
-                            for(int k = 0 ; k < instrumentList.size() ; k++){
-                                if(instrumentList.get(k).equals(position[j])) {
-                                    flag = 1;
+                            for(int j = 0 ; j < position.length ; j++){
+                                int flag = 0;
+                                for(int k = 0 ; k < instrumentList.size() ; k++){
+                                    if(instrumentList.get(k).equals(position[j])) {
+                                        flag = 1;
+                                    }
+                                }
+                                if(flag == 0){
+                                    instrumentList.add(position[j]);
+                                    instrumentList = SortPosition.SortBy(instrumentList);
                                 }
                             }
-                            if(flag == 0){
-                                Log.d("냠", "값추가");
-                                instrumentList.add(position[j]);
-                                instrumentList = SortPosition.SortBy(instrumentList);
+
+                            PostItemModel itemModel = new PostItemModel(post_id, write_user_id, name, title, place, play_date, state, position, pay, content, position_state, post_date);
+                            if(itemModel.getState() == 0){
+                                PostitemModelsActive.add(0, itemModel);
                             }
+                            PostitemModels.add(0, itemModel);
+
                         }
+                        postAdapter = new PostAdapter(PostitemModels, ownerPostListActivity.this, user_id);
+                        PostList.setAdapter(postAdapter);
 
-                        PostItemModel itemModel = new PostItemModel(post_id, write_user_id, name, title, place, play_date, state, position, pay, content, position_state, post_date);
-                        if(itemModel.getState() == 0){
-                            PostitemModelsActive.add(0, itemModel);
-                        }
-                        Log.d("냠", "아이템 리스트" + itemModel.getTitle());
-                        PostitemModels.add(0, itemModel);
+                        ArrayAdapter spinnerAdapter_place;
+                        spinnerAdapter_place = new ArrayAdapter<String>(ownerPostListActivity.this, R.layout.spinner_item, placeList);
+                        spinnerAdapter_place.setDropDownViewResource(R.layout.spinner_dropdown);
+                        instrumentList.add("직접입력");
+                        instrumentList.add(0,"전체");
+                        ArrayAdapter spinnerAdapter_instrument;
+                        spinnerAdapter_instrument = new ArrayAdapter<String>(ownerPostListActivity.this, R.layout.spinner_item, instrumentList);
+                        spinnerAdapter_instrument.setDropDownViewResource(R.layout.spinner_dropdown);
 
-                    }
-                    postAdapter = new PostAdapter(PostitemModels, ownerPostListActivity.this, user_id);
-                    PostList.setAdapter(postAdapter);
+                        placeSpinner.setAdapter(spinnerAdapter_place);
+                        instrumentSpinner.setAdapter(spinnerAdapter_instrument);
 
-                    ArrayAdapter spinnerAdapter_place;
-                    spinnerAdapter_place = new ArrayAdapter<String>(ownerPostListActivity.this, R.layout.spinner_item, placeList);
-                    spinnerAdapter_place.setDropDownViewResource(R.layout.spinner_dropdown);
-                    instrumentList.add("직접입력");
-                    instrumentList.add(0,"전체");
-                    ArrayAdapter spinnerAdapter_instrument;
-                    spinnerAdapter_instrument = new ArrayAdapter<String>(ownerPostListActivity.this, R.layout.spinner_item, instrumentList);
-                    spinnerAdapter_instrument.setDropDownViewResource(R.layout.spinner_dropdown);
-
-                    placeSpinner.setAdapter(spinnerAdapter_place);
-                    instrumentSpinner.setAdapter(spinnerAdapter_instrument);
-
-                    instrumentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            String search = parent.getItemAtPosition(position).toString();
-                            key_instrument = search;
-                            if(search.equals("직접입력")){
-                                //직접입력 구현 필요
-                           }else{
-                            if(checkBox.isChecked()){
-                                postAdapter = new PostAdapter(search_key(key_place, key_instrument,0), ownerPostListActivity.this, user_id);
-                            }else{
-                                postAdapter = new PostAdapter(search_key(key_place, key_instrument, 1), ownerPostListActivity.this, user_id);
+                        instrumentSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                String search = parent.getItemAtPosition(position).toString();
+                                key_instrument = search;
+                                if(search.equals("직접입력")){
+                                    //직접입력 구현 필요
+                               }else{
+                                if(checkBox.isChecked()){
+                                    postAdapter = new PostAdapter(search_key(key_place, key_instrument,0), ownerPostListActivity.this, user_id);
+                                }else{
+                                    postAdapter = new PostAdapter(search_key(key_place, key_instrument, 1), ownerPostListActivity.this, user_id);
+                                }
+                                PostList.setAdapter(postAdapter);
+                                }
                             }
-                            PostList.setAdapter(postAdapter);
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
                             }
-                        }
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-                        }
-                    });
+                        });
 
                     placeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -213,7 +202,7 @@ public class ownerPostListActivity extends AppCompatActivity {
                                 postAdapter = new PostAdapter(search_key(key_place, key_instrument,0), ownerPostListActivity.this, user_id);
                             }else{
                                 postAdapter = new PostAdapter(search_key(key_place, key_instrument, 1), ownerPostListActivity.this, user_id);
-                            }
+                              }
                             PostList.setAdapter(postAdapter);
                         }
                     });
@@ -229,17 +218,17 @@ public class ownerPostListActivity extends AppCompatActivity {
         queue.add(ownerPostRequest);
 
         //menu
-        menu_home = (ImageView)findViewById(R.id.menu_home);
-        menu_post = (ImageView)findViewById(R.id.menu_post);
-        menu_rating = (ImageView)findViewById(R.id.menu_rating);
-        menu_chat = (ImageView)findViewById(R.id.menu_chat);
-        menu_profile = (ImageView)findViewById(R.id.menu_profile);
+        menu_home = (ImageView) findViewById(R.id.menu_home);
+        menu_post = (ImageView) findViewById(R.id.menu_post);
+        menu_rating = (ImageView) findViewById(R.id.menu_rating);
+        menu_chat = (ImageView) findViewById(R.id.menu_chat);
+        menu_profile = (ImageView) findViewById(R.id.menu_profile);
 
         menu_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ownerPostListActivity.this, home.class);
-                intent.putExtra("user_id", user_id);
+                Intent intent = new Intent(getApplicationContext(), com.example.slur.home.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -247,8 +236,8 @@ public class ownerPostListActivity extends AppCompatActivity {
         menu_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ownerPostListActivity.this, postTypeSelect.class);
-                intent.putExtra("user_id", user_id);
+                Intent intent = new Intent(getApplicationContext(), com.example.slur.postTypeSelect.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -256,13 +245,41 @@ public class ownerPostListActivity extends AppCompatActivity {
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user_id > 0){
-                    Intent intent = new Intent(ownerPostListActivity.this, com.example.slur.profile.profile.class);
-                    intent.putExtra("user_id", user_id);
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.profile.profile.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(ownerPostListActivity.this, LoginActivity.class);
-                    intent.putExtra("user_id", user_id);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+        menu_rating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.rating.RatingHome.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+        menu_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user_id > 0) {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.chat.chatList.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), com.example.slur.LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intent);
                 }
             }
@@ -335,44 +352,3 @@ public class ownerPostListActivity extends AppCompatActivity {
     };
 }
 
-class SortPosition {
-
-    public static List<String> SortBy(List<String> itemsList) {
-
-        String l;
-
-        for (int i = 0; i < itemsList.size(); i++) {
-            for (int j = 0; j < itemsList.size() - i - 1; j++) {
-                int len1 = itemsList.get(j).length();
-                int len2 = itemsList.get(j + 1).length();
-                int lim = Math.min(len1, len2);
-                String v1 = itemsList.get(j);
-                String v2 = itemsList.get(j + 1);
-
-                int check = 0;
-                int flag = 0; //두 단어간 우선순위 없음
-                int value = 0;
-                while (check < lim) {
-                    char c1 = v1.charAt(check);
-                    char c2 = v2.charAt(check);
-                    if (c1 != c2) {
-                        flag = 1; //두 단어간 우선순위 있음
-                        value = c1 - c2;
-                        break;
-                    }
-                    check++;
-                }
-                if (flag == 0) value = len1 - len2;
-
-                if ((flag == 1 && value > 0) || (flag == 0 && value > 0)) {
-
-                    l = itemsList.get(j);
-                    itemsList.set(j, itemsList.get(j + 1));
-                    itemsList.set(j + 1, l);
-
-                }
-            }
-        }
-        return itemsList;
-    }
-}

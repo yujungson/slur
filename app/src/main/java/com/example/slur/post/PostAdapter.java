@@ -83,17 +83,68 @@ public class PostAdapter extends BaseAdapter {
             }
             state.setText(post_state);
 
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ownerPostItemView.class);
+                    intent.putExtra("item", itemsModelList.get(position));
+                    intent.putExtra("user_id", user_id);
+                    v.getContext().startActivity(intent);
+                }
+            });
+
+        }else{
+            view = null;
+
+            LayoutInflater inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.ownerpost_view, parent, false);
+
+            int post_id; String post_state;
+            TextView title = view.findViewById(R.id.title);
+            TextView state = view.findViewById(R.id.state);
+            TextView writer = view.findViewById(R.id.writer);
+            TextView play_date = view.findViewById(R.id.play_date);
+            TextView place = view.findViewById(R.id.place);
+
+            PostItemModel item = itemsModelList.get(position);
+
+            post_id = item.getPost_id();
+            title.setText(item.getTitle());
+            writer.setText(item.getWriter());
+            play_date.setText(item.getPlay_date());
+            place.setText(item.getPlace());
+
+            switch (item.getState()){
+                case 0 : {
+                    post_state = "섭외중";
+                    state.setTextColor(Color.parseColor("#088A29"));
+                    break;}
+                case 1 : {
+                    post_state = "연주완료";
+                    state.setTextColor(Color.parseColor("#0174DF"));
+                    break;
+                }
+                case 2 : {
+                    post_state = "연주취소";
+                    break;
+                }
+                default : post_state = "error"; break;
+            }
+            state.setText(post_state);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ownerPostItemView.class);
+                    intent.putExtra("item", itemsModelList.get(position));
+                    intent.putExtra("user_id", user_id);
+                    v.getContext().startActivity(intent);
+                }
+            });
+
         }
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ownerPostItemView.class);
-                intent.putExtra("item", itemsModelList.get(position));
-                intent.putExtra("user_id", user_id);
-                v.getContext().startActivity(intent);
-            }
-        });
+
 
         return view;
     }

@@ -49,7 +49,9 @@ public class playerPostWriteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent( getApplicationContext(), playerPostListActivity.class );
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity( intent );
+                finish();
             }
         });
 
@@ -129,7 +131,9 @@ public class playerPostWriteActivity extends AppCompatActivity {
                                 Log.d("냠냠", "if문들어옴");
                                 Toast.makeText(getApplicationContext(), "연주희망 게시판에 글이 작성되었습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), playerPostListActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
+                                finish();
 
                                 //실패시
                             } else {
